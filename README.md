@@ -17,6 +17,7 @@ Getting started
 ---------------
 
     mvn package
+    java -jar consumer/target/consumer-1.0-SNAPSHOT-jar-with-dependencies.jar
 
 Resources
 ---------

@@ -6,7 +6,7 @@ import java.time.Duration;
 import java.util.Arrays;
 import java.util.Properties;
 
-public class Consumer {
+public class ConsumerApplication {
 
     public static void main(String[] args) {
         Properties props = new Properties();
