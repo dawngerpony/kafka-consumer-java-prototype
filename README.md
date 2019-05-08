@@ -17,11 +17,34 @@ Prerequisites
 Getting started
 ---------------
 
-    mvn package
-    docker-compose up
-    java -jar consumer/target/consumer-1.0-SNAPSHOT-jar-with-dependencies.jar
-    java -jar producer/target/producer-1.0-SNAPSHOT-jar-with-dependencies.jar
-    curl -s http://localhost:8081/subjects | jq '.'
+To run the prototype:
+
+1. Build the application(s):
+
+        mvn package
+
+1. Fire up Kafka (and Zookeeper, and the Confluent Schema Registry):
+
+        docker-compose up
+
+1. Run the consumer, to listen to your topic:
+
+        java -jar consumer/target/consumer-1.0-SNAPSHOT-jar-with-dependencies.jar
+
+1. Run the producer application, to publish a "payment" onto the topic:
+
+        java -jar producer/target/producer-1.0-SNAPSHOT-jar-with-dependencies.jar
+
+1. (Optional) Have a look at the schema registry to see your schema registered.
+
+        curl -s http://localhost:8081/subjects | jq '.'
+        curl -s http://localhost:8081/subjects/transactions-value/versions/latest | jq '.'
+
+1. Look at the console output of the consumer application to see your payment.
+
+        Subscribed to topic transactions
+        key = 1, value = {"id": "1", "amount": 1.0}
+
 
 Resources
 ---------
