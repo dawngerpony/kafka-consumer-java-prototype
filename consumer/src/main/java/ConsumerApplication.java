@@ -9,6 +9,8 @@ import java.util.Properties;
 
 public class ConsumerApplication {
 
+    public static String TOPIC_NAME = "test";
+
     public static void main(String[] args) {
         Properties props = new Properties();
         props.setProperty("bootstrap.servers", "localhost:9092");
@@ -21,7 +23,8 @@ public class ConsumerApplication {
 
         final Consumer<String, GenericRecord> consumer = new KafkaConsumer<>(props);
 
-        consumer.subscribe(Arrays.asList("test"));
+        consumer.subscribe(Arrays.asList(TOPIC_NAME));
+        System.out.println("Subscribed to topic " + TOPIC_NAME);
         while (true) {
             ConsumerRecords<String, GenericRecord> records = consumer.poll(Duration.ofMillis(100));
             for (ConsumerRecord<String, GenericRecord> record : records)

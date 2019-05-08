@@ -1,7 +1,8 @@
-Kafka consumer prototype in Java
-================================
+Kafka prototype in Java with Avro
+=================================
 
-A very simple demonstration of how to build a Kafka consumer in Java.
+A very simple demonstration of how to build a Kafka producer/consumer in Java
+using Apache Avro for serialization.
 
 * More up to date than the other tutorials I found.
 * Based off the official Javadocs rather than a random (old) tutorial.
@@ -17,7 +18,9 @@ Getting started
 ---------------
 
     mvn package
+    docker-compose up
     java -jar consumer/target/consumer-1.0-SNAPSHOT-jar-with-dependencies.jar
+    java -jar producer/target/producer-1.0-SNAPSHOT-jar-with-dependencies.jar
 
 Resources
 ---------

@@ -47,7 +47,5 @@ public class ProducerApplication {
             producer.flush();
             producer.close();
         }
-
-        producer.close();
     }
 }
