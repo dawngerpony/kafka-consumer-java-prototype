@@ -24,11 +24,11 @@
             <groupId>org.apache.avro</groupId>
             <artifactId>avro</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.duffj.soa</groupId>
-            <artifactId>domain</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.duffj.soa</groupId>-->
+            <!--<artifactId>domain</artifactId>-->
+            <!--<version>1.0-SNAPSHOT</version>-->
+        <!--</dependency>-->
     </dependencies>
 
     <build>
@@ -49,7 +49,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>ProducerApplication</mainClass>
+                            <mainClass>com.example.ProducerApplication</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -61,6 +61,52 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <!-- Set the Java target version to 1.8 -->
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.0</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.avro</groupId>
+                <artifactId>avro-maven-plugin</artifactId>
+                <version>${avro.version}</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>schema</goal>
+                        </goals>
+                        <configuration>
+                            <sourceDirectory>${project.basedir}/src/main/resources/com/example/</sourceDirectory>
+                            <includes>
+                                <include>Payment.avsc</include>
+                            </includes>
+                            <outputDirectory>${project.build.directory}/generated-sources</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>io.confluent</groupId>
+                <artifactId>kafka-schema-registry-maven-plugin</artifactId>
+                <version>5.2.1</version>
+                <configuration>
+                    <schemaRegistryUrls>
+                        <param>http://localhost:8081</param>
+                    </schemaRegistryUrls>
+                    <subjects>
+                        <transactions-value>src/main/resources/com/example/Payment.avsc</transactions-value>
+                    </subjects>
+                    <outputDirectory/>
+                </configuration>
+                <goals>
+                    <goal>test-compatibility</goal>
+                </goals>
             </plugin>
         </plugins>
     </build>

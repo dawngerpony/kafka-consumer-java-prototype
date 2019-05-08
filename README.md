@@ -21,6 +21,7 @@ Getting started
     docker-compose up
     java -jar consumer/target/consumer-1.0-SNAPSHOT-jar-with-dependencies.jar
     java -jar producer/target/producer-1.0-SNAPSHOT-jar-with-dependencies.jar
+    curl -s http://localhost:8081/subjects | jq '.'
 
 Resources
 ---------

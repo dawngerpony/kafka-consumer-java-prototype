@@ -50,7 +50,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>ConsumerApplication</mainClass>
+                            <mainClass>com.example.ConsumerApplication</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

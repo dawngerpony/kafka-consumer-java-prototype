@@ -13,7 +13,6 @@ services:
     volumes:
     - ./docker-data/zoo1/data:/data
     - ./docker-data/zoo1/datalog:/datalog
-
   kafka1:
     image: confluentinc/cp-kafka:5.2.1
     hostname: kafka1
@@ -31,7 +30,6 @@ services:
     - ./docker-data/kafka1/data:/var/lib/kafka/data
     depends_on:
     - zoo1
-
   schema-registry:
     image: confluentinc/cp-schema-registry:5.2.1
     hostname: schema-registry
@@ -44,3 +42,13 @@ services:
     environment:
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
       SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: 'zoo1:2181'
+#  mysql:
+#    image: mysql/mysql-server
+#    hostname: db
+#    container_name: db
+#    ports:
+#    - "3306:3306"
+#    environment:
+#      MYSQL_ROOT_PASSWORD: "password"
+#    volumes:
+#      - ./docker-data/mysql/data:/var/lib/mysql
