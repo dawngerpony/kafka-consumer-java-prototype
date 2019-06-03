@@ -19,14 +19,16 @@ public class ConsumerApplication {
 
     public static void main(String[] args) {
         Properties props = new Properties();
-        props.setProperty("bootstrap.servers", "localhost:9092");
+        props.setProperty("bootstrap.servers", System.getProperty("bootstrap.servers", "localhost:9092"));
         props.put(ConsumerConfig.GROUP_ID_CONFIG, "test-payments");
         props.setProperty("enable.auto.commit", "true");
         props.setProperty("auto.commit.interval.ms", "1000");
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, KafkaAvroDeserializer.class);
-        props.put(AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG, "http://localhost:8081");
+        props.put(AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG,
+                System.getProperty(AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG, "http://localhost:8081")
+        );
         props.put(KafkaAvroDeserializerConfig.SPECIFIC_AVRO_READER_CONFIG, true);
 
         final KafkaConsumer<String, Payment> consumer = new KafkaConsumer<>(props);
