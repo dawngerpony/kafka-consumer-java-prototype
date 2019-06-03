@@ -14,9 +14,10 @@ import java.util.Properties;
 
 public class ProducerApplication {
 
-    private static final String TOPIC = "transactions";
+    private static final String DEFAULT_TOPIC = "transactions";
 
     public static void main(String[] args) {
+        String topic = System.getProperty("topic", DEFAULT_TOPIC);
         Properties props = new Properties();
         props.put("bootstrap.servers", System.getProperty("bootstrap.servers", "localhost:9092"));
         props.put("acks", "all");
@@ -29,7 +30,7 @@ public class ProducerApplication {
         KafkaProducer<String, Payment> paymentProducer = new KafkaProducer<>(props);
         final String orderId = "1";
         final Payment payment1 = new Payment(orderId, 1.00);
-        final ProducerRecord<String, Payment> record1 = new ProducerRecord<>(TOPIC, payment1.getId().toString(), payment1);
+        final ProducerRecord<String, Payment> record1 = new ProducerRecord<>(topic, payment1.getId().toString(), payment1);
 
         try {
             paymentProducer.send(record1);
