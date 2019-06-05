@@ -22,7 +22,7 @@ public class ProducerApplication {
     private static final String SYSTEM_PROPERTY_TOPIC = "topic";
 
     public static void main(String[] args) {
-        String topic = System.getProperty(SYSTEM_PROPERTY_TOPIC, DEFAULT_TOPIC);
+        final String topic = System.getProperty(SYSTEM_PROPERTY_TOPIC, DEFAULT_TOPIC);
         Properties props = new Properties();
         props.put("bootstrap.servers", System.getProperty(SYSTEM_PROPERTY_BOOTSTRAP_SERVERS, "localhost:9092"));
         props.put("acks", "all");
