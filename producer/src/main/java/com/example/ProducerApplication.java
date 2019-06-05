@@ -16,16 +16,22 @@ public class ProducerApplication {
 
     private static final String DEFAULT_TOPIC = "transactions";
 
+    private static final String SYSTEM_PROPERTY_BOOTSTRAP_SERVERS = "bootstrap.servers";
+    private static final String SYSTEM_PROPERTY_SCHEMA_REGISTRY_URL_CONFIG =
+            AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG;
+    private static final String SYSTEM_PROPERTY_TOPIC = "topic";
+
     public static void main(String[] args) {
-        String topic = System.getProperty("topic", DEFAULT_TOPIC);
+        String topic = System.getProperty(SYSTEM_PROPERTY_TOPIC, DEFAULT_TOPIC);
         Properties props = new Properties();
-        props.put("bootstrap.servers", System.getProperty("bootstrap.servers", "localhost:9092"));
+        props.put("bootstrap.servers", System.getProperty(SYSTEM_PROPERTY_BOOTSTRAP_SERVERS, "localhost:9092"));
         props.put("acks", "all");
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, KafkaAvroSerializer.class);
         props.put(AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG,
-                System.getProperty(AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG, "http://localhost:8081")
+                System.getProperty(SYSTEM_PROPERTY_SCHEMA_REGISTRY_URL_CONFIG, "http://localhost:8081")
         );
+        System.out.println(props);
 
         KafkaProducer<String, Payment> paymentProducer = new KafkaProducer<>(props);
         final String orderId = "1";
